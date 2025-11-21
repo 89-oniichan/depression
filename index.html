@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEPRESSION</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/gif" href="assets/images/cat_crying.gif">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Creepster&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0a;
+  color: white;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  overflow: hidden;
+  min-height: 100vh;
+  cursor: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+button, a, .btn, .music-control {
+  cursor: none !important;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  pointer-events: auto;
+  -webkit-touch-callout: none;
+}
+
+/* Animated background */
+.bg-chaos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at 20% 80%, rgba(255, 0, 100, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(100, 0, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 60%),
+    #0a0a0a;
+  animation: bgPulse 4s ease-in-out infinite alternate;
+  z-index: -3;
+}
+
+@keyframes bgPulse {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  100% { filter: hue-rotate(30deg) brightness(1.1); }
+}
+
+/* Scan lines */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+/* VHS glitch effect */
+.vhs-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+  animation: vhsFlicker 0.1s infinite;
+}
+
+@keyframes vhsFlicker {
+  0% { opacity: 0.03; }
+  50% { opacity: 0.05; }
+  100% { opacity: 0.03; }
+}
+
+.vhs-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 100%
+  );
+  animation: vhsScan 6s linear infinite;
+}
+
+@keyframes vhsScan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Rain effect */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.rain {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: linear-gradient(transparent, rgba(150, 180, 255, 0.6));
+  animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+  0% { transform: translateY(-20px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Falling pixel cats instead of emojis */
+.cat-rain {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  animation: catFall 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+  image-rendering: pixelated;
+}
+
+@keyframes catFall {
+  0% { 
+    transform: translateY(-60px) rotate(0deg); 
+    opacity: 0; 
+  }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { 
+    transform: translateY(100vh) rotate(360deg); 
+    opacity: 0; 
+  }
+}
+
+/* Center content */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  z-index: 10;
+}
+
+/* Glitch title */
+.title-container {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(50px, 12vw, 90px);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 
+    0 0 10px #ff00cc,
+    0 0 20px #ff00cc,
+    0 0 40px #ff00cc,
+    0 0 80px #ff00cc,
+    4px 4px 0 #00ffff,
+    -4px -4px 0 #ff00cc;
+  animation: glitchText 3s infinite;
+  position: relative;
+}
+
+h1::before,
+h1::after {
+  content: 'DEPRESSION';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1::before {
+  color: #ff00cc;
+  animation: glitch1 0.3s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-3px);
+}
+
+h1::after {
+  color: #00ffff;
+  animation: glitch2 0.3s infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(3px);
+}
+
+@keyframes glitch1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(3px, -3px); }
+  60% { transform: translate(-3px, -3px); }
+  80% { transform: translate(3px, 3px); }
+}
+
+@keyframes glitch2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(3px, -3px); }
+  40% { transform: translate(-3px, 3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(-3px, -3px); }
+}
+
+@keyframes glitchText {
+  0%, 90%, 100% { opacity: 1; transform: scale(1); }
+  92% { opacity: 0.8; transform: scale(1.02) skewX(2deg); }
+  94% { opacity: 1; transform: scale(0.98) skewX(-2deg); }
+}
+
+.sub {
+  font-size: clamp(16px, 4vw, 24px);
+  opacity: 0.9;
+  margin-bottom: 30px;
+  color: #aaa;
+  text-shadow: 0 0 10px rgba(255, 100, 200, 0.5);
+  animation: fadeInOut 4s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Rotating sad quotes */
+.quote {
+  font-size: clamp(12px, 3vw, 16px);
+  color: #888;
+  margin-bottom: 25px;
+  font-style: italic;
+  min-height: 40px;
+  animation: quoteGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes quoteGlow {
+  0% { text-shadow: 0 0 5px rgba(150, 150, 255, 0.3); }
+  100% { text-shadow: 0 0 15px rgba(150, 150, 255, 0.6); }
+}
+
+/* Buttons container */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 18px 50px;
+  background: linear-gradient(135deg, #ff77dd, #ff44aa);
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  font-size: clamp(18px, 5vw, 24px);
+  font-weight: bold;
+  font-family: 'Bangers', cursive;
+  letter-spacing: 3px;
+  cursor: pointer;
+  box-shadow: 
+    0 0 20px rgba(255, 119, 221, 0.6),
+    0 0 40px rgba(255, 119, 221, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn .cat-icon {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: btnShine 3s infinite;
+}
+
+@keyframes btnShine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.btn:hover {
+  transform: scale(1.15) rotate(-3deg);
+  box-shadow: 
+    0 0 30px rgba(255, 119, 221, 0.8),
+    0 0 60px rgba(255, 119, 221, 0.6),
+    0 0 90px rgba(255, 119, 221, 0.4);
+  background: linear-gradient(135deg, #ff99ee, #ff66cc);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn.register {
+  background: linear-gradient(135deg, #77ddff, #44aaff);
+  box-shadow: 
+    0 0 20px rgba(119, 221, 255, 0.6),
+    0 0 40px rgba(119, 221, 255, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn.register:hover {
+  box-shadow: 
+    0 0 30px rgba(119, 221, 255, 0.8),
+    0 0 60px rgba(119, 221, 255, 0.6),
+    0 0 90px rgba(119, 221, 255, 0.4);
+  background: linear-gradient(135deg, #99eeff, #66ccff);
+}
+
+/* Floating meme cats */
+.floating {
+  position: fixed;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 0 20px rgba(255, 100, 200, 0.5));
+}
+
+.cat1 {
+  top: 5%;
+  left: 3%;
+  width: clamp(100px, 20vw, 180px);
+  animation: float1 5s ease-in-out infinite, spin1 20s linear infinite;
+}
+
+.cat2 {
+  bottom: 15%;
+  right: 3%;
+  width: clamp(150px, 30vw, 280px);
+  animation: float2 4s ease-in-out infinite, shake 0.15s infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-30px) rotate(5deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes spin1 {
+  0% { filter: drop-shadow(0 0 20px rgba(255, 100, 200, 0.5)) hue-rotate(0deg); }
+  100% { filter: drop-shadow(0 0 20px rgba(255, 100, 200, 0.5)) hue-rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0) rotate(0); }
+  25% { transform: translate(3px, -3px) rotate(2deg); }
+  50% { transform: translate(-3px, 3px) rotate(-2deg); }
+  75% { transform: translate(3px, 2px) rotate(1deg); }
+}
+
+/* Extra floating cats */
+.mini-cat {
+  position: fixed;
+  width: clamp(40px, 8vw, 70px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 2;
+  animation: miniFloat 8s ease-in-out infinite;
+}
+
+@keyframes miniFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(10deg); }
+  50% { transform: translateY(10px) rotate(-10deg); }
+  75% { transform: translateY(-15px) rotate(5deg); }
+}
+
+/* Walking cat at bottom */
+.walking-cat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.walking-cat {
+  position: absolute;
+  bottom: 5px;
+  height: 60px;
+  image-rendering: pixelated;
+  animation: walkAcross 15s linear infinite;
+}
+
+@keyframes walkAcross {
+  0% { 
+    left: -100px;
+    transform: scaleX(1);
+  }
+  49% {
+    left: calc(100% + 100px);
+    transform: scaleX(1);
+  }
+  50% {
+    left: calc(100% + 100px);
+    transform: scaleX(-1);
+  }
+  99% {
+    left: -100px;
+    transform: scaleX(-1);
+  }
+  100% {
+    left: -100px;
+    transform: scaleX(1);
+  }
+}
+
+/* Second walking cat going opposite direction */
+.walking-cat.reverse {
+  animation: walkAcrossReverse 12s linear infinite;
+  animation-delay: -6s;
+  height: 50px;
+  bottom: 10px;
+  opacity: 0.7;
+}
+
+@keyframes walkAcrossReverse {
+  0% { 
+    left: calc(100% + 100px);
+    transform: scaleX(-1);
+  }
+  49% {
+    left: -100px;
+    transform: scaleX(-1);
+  }
+  50% {
+    left: -100px;
+    transform: scaleX(1);
+  }
+  99% {
+    left: calc(100% + 100px);
+    transform: scaleX(1);
+  }
+  100% {
+    left: calc(100% + 100px);
+    transform: scaleX(-1);
+  }
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #555;
+  z-index: 10;
+}
+
+.footer a {
+  color: #ff77dd;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.footer a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #ff77dd;
+}
+
+/* Counter */
+.visitor-count {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  font-size: 12px;
+  color: #666;
+  z-index: 10;
+  text-align: right;
+}
+
+.visitor-count span {
+  color: #ff77dd;
+  font-weight: bold;
+}
+
+/* Audio visualizer bars */
+.visualizer {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.bar {
+  width: 8px;
+  background: linear-gradient(to top, #ff77dd, #77ddff);
+  border-radius: 4px 4px 0 0;
+  animation: barPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes barPulse {
+  0% { height: 10px; }
+  100% { height: 40px; }
+}
+
+/* Loading overlay for rickroll */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+.loading-text {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(24px, 6vw, 48px);
+  color: #ff77dd;
+  animation: loadingPulse 0.5s ease-in-out infinite alternate;
+  text-align: center;
+  padding: 20px;
+}
+
+@keyframes loadingPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+.loading-cat {
+  width: 150px;
+  margin-bottom: 20px;
+  image-rendering: pixelated;
+}
+
+/* Music controls */
+.music-control {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 200;
+  background: rgba(255, 119, 221, 0.2);
+  border: 2px solid #ff77dd;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 24px;
+}
+
+.music-control:hover {
+  background: rgba(255, 119, 221, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 119, 221, 0.6);
+}
+
+.music-control.playing {
+  animation: musicPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes musicPulse {
+  0% { box-shadow: 0 0 10px rgba(255, 119, 221, 0.4); }
+  100% { box-shadow: 0 0 30px rgba(255, 119, 221, 0.8); }
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 9999;
+  image-rendering: pixelated;
+  transform: translate(-50%, -50%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 95%;
+    padding: 20px 10px;
+  }
+
+  h1 {
+    font-size: clamp(40px, 10vw, 70px);
+    letter-spacing: 4px;
+  }
+
+  .sub {
+    font-size: clamp(16px, 4vw, 22px);
+    margin-bottom: 20px;
+  }
+
+  .sub img {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .quote {
+    font-size: clamp(13px, 3vw, 16px);
+    padding: 0 15px;
+  }
+
+  .btn-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .btn {
+    width: 85%;
+    max-width: 300px;
+    padding: 15px 40px;
+    font-size: clamp(16px, 4vw, 20px);
+    letter-spacing: 2px;
+  }
+
+  .btn .cat-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cat1 {
+    top: 3%;
+    left: 2%;
+    width: clamp(80px, 15vw, 120px);
+  }
+
+  .cat2 {
+    bottom: 18%;
+    right: 2%;
+    width: clamp(120px, 25vw, 200px);
+  }
+
+  .mini-cat {
+    width: clamp(30px, 6vw, 50px);
+  }
+
+  .floating.cat1,
+  .floating.cat2,
+  .mini-cat {
+    display: none; /* Hide floating cats on mobile for cleaner look */
+  }
+
+  .footer {
+    bottom: 90px;
+    font-size: 10px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .footer a {
+    display: inline-block;
+    margin: 2px 0;
+  }
+
+  .visitor-count {
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+  }
+
+  .music-control {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .walking-cat-container {
+    height: 60px;
+  }
+
+  .walking-cat {
+    height: 45px;
+  }
+
+  .walking-cat.reverse {
+    height: 40px;
+  }
+
+  .visualizer {
+    height: 30px;
+    bottom: 50px;
+  }
+
+  .bar {
+    width: 6px;
+  }
+
+  .loading-cat {
+    width: 120px;
+  }
+
+  .loading-text {
+    font-size: clamp(20px, 5vw, 36px) !important;
+    padding: 15px;
+  }
+
+  /* Hide custom cursor on mobile */
+  .custom-cursor {
+    display: none;
+  }
+
+  body {
+    cursor: auto !important;
+  }
+
+  /* Reduce rain drops on mobile */
+  .rain:nth-child(n+30) {
+    display: none;
+  }
+
+  /* Reduce visualizer bars */
+  .bar:nth-child(n+20) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: clamp(35px, 9vw, 60px);
+    letter-spacing: 3px;
+  }
+
+  .sub {
+    font-size: clamp(14px, 3.5vw, 18px);
+  }
+
+  .sub img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .btn {
+    width: 90%;
+    padding: 12px 30px;
+  }
+
+  .footer {
+    font-size: 9px;
+    bottom: 85px;
+  }
+
+  .quote {
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<img src="assets/images/mouse_cat.gif" class="custom-cursor" id="customCursor" alt="">
+
+<!-- Background music -->
+<audio id="bgMusic" loop>
+  <source src="assets/audio/meow.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music control button -->
+<div class="music-control" id="musicBtn" onclick="toggleMusic()">
+  🔇
+</div>
+
+<!-- Background effects -->
+<div class="bg-chaos"></div>
+<div class="scanlines"></div>
+<div class="vhs-effect"></div>
+
+<!-- Rain -->
+<div class="rain-container" id="rain"></div>
+
+<!-- Audio visualizer -->
+<div class="visualizer" id="visualizer"></div>
+
+<!-- Walking cats at bottom -->
+<div class="walking-cat-container">
+  <img src="assets/images/cat_walking.gif" class="walking-cat" alt="walking cat">
+  <img src="assets/images/cat_walking.gif" class="walking-cat reverse" alt="walking cat">
+</div>
+
+<!-- Main cats -->
+<img src="assets/images/cat1.png" class="floating cat1" alt="sad cat">
+<img src="assets/images/cat2.gif" class="floating cat2" alt="screaming cat">
+
+<!-- Mini cats scattered -->
+<img src="assets/images/cat1.png" class="mini-cat" style="top: 60%; left: 8%;" alt="">
+<img src="assets/images/cat1.png" class="mini-cat" style="top: 20%; right: 10%; animation-delay: -2s;" alt="">
+<img src="assets/images/cat1.png" class="mini-cat" style="top: 70%; right: 15%; animation-delay: -4s;" alt="">
+
+<!-- Visitor count -->
+<div class="visitor-count">
+  <div>visitors : <span id="visitors">0</span></div>
+  <div>tears shed: <span id="tears">∞</span></div>
+  <div>time wasted: <span id="timeWasted">0s</span></div>
+</div>
+
+<!-- Main content -->
+<div class="container">
+  <div class="title-container">
+    <h1>DEPRESSION</h1>
+  </div>
+  
+  <div class="sub">
+    <img src="assets/images/cat_rubbing_eyes.gif" style="width: 40px; height: 40px; vertical-align: middle; image-rendering: pixelated;">
+    only pain. only meow.
+    <img src="assets/images/cat_crying.gif" style="width: 40px; height: 40px; vertical-align: middle; image-rendering: pixelated;">
+  </div>
+  
+  <div class="quote" id="quote">"existence is just a series of naps interrupted by disappointment"</div>
+  
+  <div class="btn-container">
+    <button class="btn" id="loginBtn" onclick="rickroll()">
+      <img src="assets/images/cat_button.gif" class="cat-icon" alt=""> Login
+    </button>
+    <button class="btn register" onclick="rickroll()">
+      <img src="assets/images/cat_button.gif" class="cat-icon" alt=""> Register
+    </button>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <a href="#" onclick="rickroll(); return false;">forgot password?</a> • 
+  <a href="#" onclick="rickroll(); return false;">forgot happiness?</a> • 
+  <a href="#" onclick="rickroll(); return false;">forgot why you exist?</a>
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loading">
+  <img src="assets/images/cat_troll.gif" class="loading-cat" alt="loading">
+  <div class="loading-text">CONNECTING TO SADNESS SERVERS...</div>
+  <div class="loading-text" style="font-size: 20px; animation-delay: 0.2s;">please wait while we harvest your tears 😿</div>
+</div>
+
+<script>
+// Background music control
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+let isPlaying = false;
+
+function toggleMusic() {
+  if (isPlaying) {
+    bgMusic.pause();
+    musicBtn.textContent = '🔇';
+    musicBtn.classList.remove('playing');
+  } else {
+    bgMusic.play();
+    musicBtn.textContent = '🔊';
+    musicBtn.classList.add('playing');
+  }
+  isPlaying = !isPlaying;
+}
+
+// Auto-play music on first interaction
+let hasInteracted = false;
+document.addEventListener('click', function() {
+  if (!hasInteracted && !isPlaying) {
+    hasInteracted = true;
+    toggleMusic(); // Auto-play on first click
+  }
+}, { once: true });
+
+// Pause music when tab is hidden/minimized or user leaves page
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    // Tab is hidden or browser minimized
+    if (isPlaying) {
+      bgMusic.pause();
+    }
+  } else {
+    // Tab is visible again
+    if (isPlaying) {
+      bgMusic.play();
+    }
+  }
+});
+
+// Pause music when window loses focus (alternative method)
+window.addEventListener('blur', function() {
+  if (isPlaying) {
+    bgMusic.pause();
+  }
+});
+
+// Resume music when window gains focus
+window.addEventListener('focus', function() {
+  if (isPlaying) {
+    bgMusic.play();
+  }
+});
+
+// Create rain drops
+const rainContainer = document.getElementById('rain');
+for (let i = 0; i < 60; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'rain';
+  drop.style.left = Math.random() * 100 + '%';
+  drop.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+  drop.style.animationDelay = Math.random() * 2 + 's';
+  drop.style.opacity = 0.3 + Math.random() * 0.4;
+  rainContainer.appendChild(drop);
+}
+
+// Create falling pixel cats instead of emojis
+function createFallingCat() {
+  const cat = document.createElement('img');
+  cat.src = 'assets/images/cat-pixel-cat.gif';
+  cat.className = 'cat-rain';
+  cat.style.left = Math.random() * 100 + '%';
+  cat.style.animationDuration = (6 + Math.random() * 6) + 's';
+  cat.style.width = (60 + Math.random() * 50) + 'px';
+  cat.style.height = 'auto';
+  document.body.appendChild(cat);
+
+  setTimeout(() => cat.remove(), 12000);
+}
+setInterval(createFallingCat, 600);
+
+// Create visualizer bars
+const visualizer = document.getElementById('visualizer');
+for (let i = 0; i < 40; i++) {
+  const bar = document.createElement('div');
+  bar.className = 'bar';
+  bar.style.animationDelay = (Math.random() * 0.5) + 's';
+  bar.style.animationDuration = (0.3 + Math.random() * 0.4) + 's';
+  visualizer.appendChild(bar);
+}
+
+// Rotating quotes
+const quotes = [
+  '"existence is just a series of naps interrupted by disappointment"',
+  '"Peace was never an option. Sleep was."',
+  '"My hobbies include staring at walls."',
+  '"monday? more like every day" - depressed cat"',
+  '"they said follow your dreams so i went back to sleep"',
+  '"error: motivation.exe has stopped working"',
+  '"why be happy when you can be a cat on the internet"',
+  '"*exists* *immediately regrets it*"',
+  '"me: today will be different. narrator: it was not."',
+  '"just one more existential crisis and then i\'ll go to bed"',
+  '"meow meow meow (translation: life is meaningless)"'
+];
+
+let quoteIndex = 0;
+const quoteEl = document.getElementById('quote');
+setInterval(() => {
+  quoteIndex = (quoteIndex + 1) % quotes.length;
+  quoteEl.style.opacity = '0';
+  setTimeout(() => {
+    quoteEl.textContent = quotes[quoteIndex];
+    quoteEl.style.opacity = '1';
+  }, 300);
+}, 4000);
+quoteEl.style.transition = 'opacity 0.3s';
+
+// Global visitor count simulation (realistic numbers)
+const visitorEl = document.getElementById('visitors');
+
+// Generate a realistic base count from when site "launched"
+const launchDate = new Date('2024-01-01').getTime(); // Pretend launch date
+const now = Date.now();
+const daysSinceLaunch = Math.floor((now - launchDate) / (1000 * 60 * 60 * 24));
+
+// Start with a reasonable base and grow slowly
+const baseSeed = 847; // Starting visitors
+const dailyGrowth = Math.floor(daysSinceLaunch * 3.7); // ~4 visitors per day
+
+// Add session-based increment
+let sessionVisits = parseInt(localStorage.getItem('visitorCount')) || 0;
+sessionVisits += 1;
+localStorage.setItem('visitorCount', sessionVisits);
+
+// Combine for realistic global count
+let totalVisitors = baseSeed + dailyGrowth + sessionVisits;
+
+// Add random small increments over time to simulate other visitors (less frequent)
+setInterval(() => {
+  if (Math.random() < 0.15) { // 15% chance every 8 seconds
+    totalVisitors += 1;
+    visitorEl.textContent = totalVisitors.toLocaleString();
+  }
+}, 8000);
+
+visitorEl.textContent = totalVisitors.toLocaleString();
+
+// Time wasted counter
+const timeWastedEl = document.getElementById('timeWasted');
+let secondsWasted = 0;
+
+setInterval(() => {
+  secondsWasted++;
+
+  if (secondsWasted < 60) {
+    timeWastedEl.textContent = secondsWasted + 's';
+  } else if (secondsWasted < 3600) {
+    const minutes = Math.floor(secondsWasted / 60);
+    const seconds = secondsWasted % 60;
+    timeWastedEl.textContent = `${minutes}m ${seconds}s`;
+  } else {
+    const hours = Math.floor(secondsWasted / 3600);
+    const minutes = Math.floor((secondsWasted % 3600) / 60);
+    timeWastedEl.textContent = `${hours}h ${minutes}m`;
+  }
+}, 1000);
+
+// Rickroll function
+function rickroll() {
+  const loading = document.getElementById('loading');
+  loading.classList.add('active');
+  
+  // Play a meow before redirect
+  if (isPlaying) {
+    bgMusic.currentTime = 0;
+  }
+  
+  // Random delay for "authenticity"
+  const delay = 1500 + Math.random() * 1000;
+  
+  setTimeout(() => {
+    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+  }, delay);
+}
+
+// Easter egg: Konami code
+let konamiCode = [];
+const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+  konamiCode.push(e.key);
+  konamiCode = konamiCode.slice(-10);
+  
+  if (konamiCode.join(',') === konamiSequence.join(',')) {
+    document.body.style.animation = 'rainbow 0.5s linear infinite';
+    alert('🎉 MAXIMUM DEPRESSION UNLOCKED 🎉\n\nYou found the secret! Here\'s a virtual hug: 🤗');
+    // Start music as reward
+    if (!isPlaying) {
+      toggleMusic();
+    }
+  }
+});
+
+// Add rainbow animation for easter egg
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes rainbow {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+`;
+document.head.appendChild(style);
+
+// Custom cursor following mouse
+const customCursor = document.getElementById('customCursor');
+document.addEventListener('mousemove', (e) => {
+  customCursor.style.left = e.clientX + 'px';
+  customCursor.style.top = e.clientY + 'px';
+});
+
+// Login button that runs away - EXTREMELY HARD to click
+const loginBtn = document.getElementById('loginBtn');
+let isRunningAway = true;
+let currentX = 0;
+let currentY = 0;
+let lastMoveTime = 0;
+let isButtonShrunk = false; // Track if button is shrunk
+let hasUserTriedToClick = false; // Track if user has attempted interaction
+
+function moveButton(isFastDodge = false) {
+  if (!isRunningAway) return;
+
+  // Mark that user has tried to interact
+  hasUserTriedToClick = true;
+
+  // Check if mobile
+  const isMobile = window.innerWidth <= 768;
+
+  // Adjust movement distance based on screen size
+  let moveDistance;
+  if (isMobile) {
+    moveDistance = isFastDodge ? 150 : 120; // Smaller jumps on mobile
+  } else {
+    moveDistance = isFastDodge ? 400 : 300; // Bigger jumps on desktop
+  }
+
+  // Random direction
+  const randomX = (Math.random() - 0.5) * moveDistance * 2;
+  const randomY = (Math.random() - 0.5) * moveDistance * 2;
+
+  currentX = randomX;
+  currentY = randomY;
+
+  // Shrink button to make it harder to catch (especially on mobile)
+  const shrinkScale = isMobile ? 0.7 : 0.85; // Smaller on mobile
+  isButtonShrunk = true;
+
+  // Reduce padding to make button width much smaller (less empty space)
+  if (isMobile) {
+    loginBtn.style.padding = '10px 15px'; // Tight padding on mobile
+  } else {
+    loginBtn.style.padding = '12px 20px'; // Reduced padding on desktop
+  }
+  loginBtn.style.fontSize = isMobile ? '15px' : '18px'; // Smaller font
+  loginBtn.style.letterSpacing = '1px'; // Tighter letter spacing
+
+  // Apply transform with faster speed + shrinking effect
+  loginBtn.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${Math.random() * 20 - 10}deg) scale(${shrinkScale})`;
+  loginBtn.style.transition = isFastDodge ? 'all 0.08s ease' : 'all 0.12s ease'; // Even faster!
+
+  lastMoveTime = Date.now();
+}
+
+// Move on mouseenter (only after first click attempt on desktop)
+loginBtn.addEventListener('mouseenter', function(e) {
+  const isMobile = window.innerWidth <= 768;
+  // On desktop, only move after user has tried to click
+  if (!isMobile && !hasUserTriedToClick) {
+    return; // Don't move on first hover on desktop
+  }
+  moveButton(true);
+});
+
+// Move on mousemove when cursor is near - INCREASED DETECTION RADIUS
+let checkInterval;
+document.addEventListener('mousemove', function(e) {
+  if (!isRunningAway) return;
+
+  const isMobile = window.innerWidth <= 768;
+  // On desktop, only start dodging after first click attempt
+  if (!isMobile && !hasUserTriedToClick) {
+    return; // Don't dodge cursor on desktop until first click
+  }
+
+  const btnRect = loginBtn.getBoundingClientRect();
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+
+  // Calculate distance from mouse to button center
+  const btnCenterX = btnRect.left + btnRect.width / 2;
+  const btnCenterY = btnRect.top + btnRect.height / 2;
+  const distance = Math.sqrt(Math.pow(mouseX - btnCenterX, 2) + Math.pow(mouseY - btnCenterY, 2));
+
+  // Adjust detection radius based on button size (smaller when shrunk)
+  const detectionRadius = isButtonShrunk ? 120 : 150; // Smaller hitbox when button is shrunk
+
+  // If mouse is within detection radius, move it away FAST
+  if (distance < detectionRadius) {
+    const timeSinceLastMove = Date.now() - lastMoveTime;
+    // Only move if 100ms has passed to avoid too many rapid moves
+    if (timeSinceLastMove > 100) {
+      moveButton(true);
+    }
+  }
+});
+
+// AGGRESSIVE prevention - multiple events
+loginBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  moveButton(true);
+  return false;
+}, true); // Use capture phase
+
+// Prevent mousedown
+loginBtn.addEventListener('mousedown', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  moveButton(true);
+  return false;
+}, true);
+
+// Prevent mouseup
+loginBtn.addEventListener('mouseup', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  moveButton(true);
+  return false;
+}, true);
+
+// Prevent pointer events
+loginBtn.addEventListener('pointerdown', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  moveButton(true);
+  return false;
+}, true);
+
+// Removed random spontaneous movements - button only moves when user tries to interact
+
+// Mobile touch support
+loginBtn.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  moveButton(true);
+  return false;
+}, { passive: false, capture: true });
+
+loginBtn.addEventListener('touchend', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  moveButton(true);
+  return false;
+}, { passive: false, capture: true });
+
+// Track touch movement and dodge on mobile
+document.addEventListener('touchmove', function(e) {
+  if (!isRunningAway) return;
+
+  const touch = e.touches[0];
+  if (!touch) return;
+
+  const btnRect = loginBtn.getBoundingClientRect();
+  const touchX = touch.clientX;
+  const touchY = touch.clientY;
+
+  // Calculate distance from touch to button center
+  const btnCenterX = btnRect.left + btnRect.width / 2;
+  const btnCenterY = btnRect.top + btnRect.height / 2;
+  const distance = Math.sqrt(Math.pow(touchX - btnCenterX, 2) + Math.pow(touchY - btnCenterY, 2));
+
+  // Adjust detection radius based on button size (smaller when shrunk)
+  const touchDetectionRadius = isButtonShrunk ? 90 : 120; // Smaller hitbox when button is shrunk
+
+  // If touch is within detection radius on mobile, move it away
+  if (distance < touchDetectionRadius) {
+    const timeSinceLastMove = Date.now() - lastMoveTime;
+    if (timeSinceLastMove > 100) {
+      moveButton(true);
+    }
+  }
+}, { passive: true });
+
+// Console easter egg
+console.log('%c😿 WHY ARE YOU HERE? 😿', 'font-size: 30px; color: #ff77dd;');
+console.log('%cgo touch grass instead of inspecting meme pages', 'font-size: 14px; color: #888;');
+console.log('%cbtw try the konami code ↑↑↓↓←→←→BA', 'font-size: 12px; color: #555;');
+</script>
+
+</body>
+</html>
